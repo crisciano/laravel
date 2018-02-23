@@ -10,6 +10,12 @@
 							Evento <strong>{{old('title')}}</strong> adicionando com sucesso !!
 						</div>
 						@endif
+
+						@if(old('id'))
+						<div class="col-12 alert alert-success">
+							Evento <strong>{{old('id')}}</strong> excluido com sucesso !!
+						</div>
+						@endif
 					</div>
 
 				@foreach ($eventos as $e)

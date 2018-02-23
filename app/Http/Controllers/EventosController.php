@@ -5,17 +5,23 @@ namespace admin\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Request;
+use admin\Evento;
 
 class EventosController extends Controller {
 
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
 	public function lista(){
 
-		$eventos = DB::select('SELECT * FROM eventos');
+		// $eventos = DB::select('SELECT * FROM eventos');
+		$eventos = Evento::all();
 		return view('eventos')->with('eventos', $eventos );
 	}
 
-	public function mostra(){
-		$id = Request::route('id');
+	public function mostra($id){
 		$evento = DB::select('SELECT * FROM eventos where id_evento = ?', [$id]);
 		return view('evento')->with('e', $evento[0]);
 	}
@@ -51,10 +57,9 @@ class EventosController extends Controller {
 		return redirect('/eventos')->withInput(Request::only('title'));
 	}
 
-	public function excluindo(){
-		$id = Request::route('id');
+	public function excluindo($id){
 		$evento = DB::delete('DELETE FROM eventos where id_evento = ?', [$id]);
-		return view('excluindo')->with('title', $id);
+		return redirect('/eventos')->withInput(Request::only('id'));
 	}
 
 	public function eventosJson(){

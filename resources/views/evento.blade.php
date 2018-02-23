@@ -7,7 +7,7 @@
 
 				<div class="col-4 mb-4">
 					<div class="card">
-						<img class="card-img-top" src="{{$e->url_evento}}" alt="Card image cap">
+						<img class="card-img-top" src="../../{{$e->url_evento}}" alt="Card image cap">
 						<div class="card-block">
 						<h4 class="card-title black"> {{$e->title_evento}}</h4>
 						<p class="card-duracao">Duração: 
