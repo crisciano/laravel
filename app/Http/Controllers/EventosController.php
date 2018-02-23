@@ -3,6 +3,7 @@
 namespace admin\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Request;
 
 class EventosController extends Controller {
@@ -19,10 +20,6 @@ class EventosController extends Controller {
 		return view('evento')->with('e', $evento[0]);
 	}
 
-	public function excluir(){
-
-	}
-
 	public function add(){
 		return view('cadastrar');
 	}
@@ -32,12 +29,37 @@ class EventosController extends Controller {
 		$duracao = Request::input('duracao');
 		$inicio = Request::input('data');
 		$descricao = Request::input('descricao');
-		$file = Request::input('file');
-		DB::insert('INSERT INTO eventos (title_evento, duracao_evento, inicio_evento, description_evento, url_evento) VALUES (?,?,?,?,?)', array( $title, $duracao, $inicio,$descricao, $file ));
+		$file = Input::file('file');
 
-		// http://localhost:8000/evento/adicionado?title=Bootstrap+Treeview+davidgtest&duracao=3+semanas&data=2018-02-24&descricao=asdasdgasd+asdg+as+asdhasdhs+dhs+h&file=user2-160x160.jpg
+		Input::hasFile($file);
 
-		return view('adicionado')->with('title', $title);
+		$destinationPath = public_path().DIRECTORY_SEPARATOR.'files';
+	    $name = uniqid(date('HisYmd'));
+		$ext = $file->getClientOriginalExtension();
+		$dest = 'files';
+		$fileName = "{$destinationPath}/{$name}.{$ext}";
+
+	    $file->move($destinationPath, $fileName);
+
+	    $url = "{$dest}/{$name}.{$ext}";
+
+	   	$insert = array($title, $duracao, $inicio, $descricao, $url);
+
+		DB::insert('INSERT INTO eventos (title_evento, duracao_evento, inicio_evento, description_evento, url_evento) VALUES (?,?,?,?,?)', $insert);
+
+		// return view('eventos')->with('title', $title);
+		return redirect('/eventos')->withInput(Request::only('title'));
+	}
+
+	public function excluindo(){
+		$id = Request::route('id');
+		$evento = DB::delete('DELETE FROM eventos where id_evento = ?', [$id]);
+		return view('excluindo')->with('title', $id);
+	}
+
+	public function eventosJson(){
+		$eventos = DB::select('SELECT * FROM eventos');
+		return response()->json($eventos);
 	}
 
 }

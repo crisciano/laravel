@@ -4,6 +4,13 @@
 	<section id="eventos">
 		<div class="container">
 			<div class="row">
+					<div class="col-12">
+						@if(old('title'))
+						<div class="col-12 alert alert-success">
+							Evento <strong>{{old('title')}}</strong> adicionando com sucesso !!
+						</div>
+						@endif
+					</div>
 
 				@foreach ($eventos as $e)
 					<div class="col-4 mb-4">
@@ -19,7 +26,7 @@
 							</p>
 							<p class="card-text"> {{$e->description_evento}}</p>
 							<a href="/eventos/mostra/{{$e->id_evento}}" class="btn btn-primary">quero saber mais</a>
-							<a href="/eventos/mostra/{{$e->id_evento}}" class="btn btn-danger">excluir</a>
+							<a href="/eventos/excluindo/{{$e->id_evento}}" class="btn btn-danger">excluir</a>
 							</div>
 						</div>
 					</div>

@@ -11,7 +11,11 @@ Route::get('/eventos/mostra/{id}', 'EventosController@mostra');
 
 Route::get('/eventos/add', 'EventosController@add');
 
-Route::get('evento/adicionado', 'EventosController@adicionado');
+Route::post('/eventos/adicionado', 'EventosController@adicionado');
+
+Route::get('/eventos/excluindo/{id}', 'EventosController@excluindo');
+
+Route::get('/eventos/json', 'EventosController@eventosJson');
 
 // Route::get('/', 'Auth/LoginController@__construct');
 // nome do controller@ nome da function

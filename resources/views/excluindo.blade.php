@@ -1,5 +1,5 @@
 @extends('principal')
 
 @section('conteudo')
-	Evento {{$title}} adicionando com sucesso !!
+	Evento {{$title}} excluido com sucesso !!
 @stop

@@ -7,7 +7,9 @@
 		<div class="row">
 			<div class="col-6 offset-3">
 				<h2>cadastro</h2>
-				<form class="form-evento" action="/evento/adicionado" method="post" enctype="multipart/form-data">
+				<form class="form-evento" action="/eventos/adicionado" method="post" enctype="multipart/form-data">
+					<!-- token no formulario metodo post -->
+					{{ csrf_field() }}
 					<div class="form-group">
 						<label for="">title</label>
 						<input type="text" name="title" class="form-control" >
